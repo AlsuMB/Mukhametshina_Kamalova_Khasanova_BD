@@ -1,11 +1,11 @@
 -- DONE
 CREATE TABLE PRODUCT(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    license_term VARCHAR (50) NOT NULL,
-    price INT CONSTRAINT positive_price CHECK (price > 0), CHECK (price < 50000),
     category_id INT REFERENCES CATEGORY(id),
     producer_id INT REFERENCES PRODUCER(id),
+    name VARCHAR(100) NOT NULL,
+    license_term VARCHAR (50) NOT NULL,
+    price INT CONSTRAINT positive_price CHECK (price > 0), CHECK (price < 50000)
 );
 
 --DONE
@@ -46,8 +46,9 @@ CREATE TABLE PRODUCER(
 -- LIYA
 CREATE TABLE BASKET(
     id SERIAL PRIMARY KEY,
-    product_id VARCHAR (100) NOT NULL,
-    promocode_id INT REFERENCES PROMOCODE(id)
+    product_id INT REFERENCES PRODUCT(id),
+    promocode_id INT REFERENCES PROMOCODE(id),
+
 );
 
 -- LIYA
@@ -56,17 +57,33 @@ CREATE TABLE PROMOCODE(
     promocode VARCHAR(50) NOT NULL
 );
 
--- AZALEA
+-- LIYA
 CREATE TABLE PAYMENT(
     id SERIAL PRIMARY KEY,
+    id_customer INT REFERENCES CUSTOMER(id),
+    card_number VARCHAR(16) NOT NULL,
+    cardholder_name VARCHAR(26) NOT NULL
 );
 
--- AZALEA
+-- LIYA
 CREATE TABLE ORDER(
     id SERIAL PRIMARY KEY,
+    id_basket UNIQUE FOREIGN KEY REFERENCES BASKET(id),
+    id_customer INT REFERENCES CUSTOMER(id),
+    id_payment INT REFERENCES PAYMENT(id),
+    cost VARCHAR(7) NOT NULL,
+    order_date VARCHAR(8) NOT NULL
+
 );
 
--- AZALEA
+-- LIYA
 CREATE TABLE CUSTOMER(
     id SERIAL PRIMARY KEY,
+    full_name VARCHAR(1478) NOT NULL,
+    birthday VARCHAR(8) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    postcode VARCHAR(345) NOT NULL,
+    login VARCHAR(20) NOT NULL,
+    password VARCHAR(20) NOT NULL
 );
