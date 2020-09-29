@@ -69,8 +69,8 @@ CREATE TABLE ORDER(
     id_basket INT UNIQUE FOREIGN KEY REFERENCES BASKET(id),
     id_customer INT REFERENCES CUSTOMER(id),
     id_payment INT REFERENCES PAYMENT(id),
-    cost VARCHAR(7) NOT NULL,
-    order_date VARCHAR(8) NOT NULL
+    cost INT NOT NULL,
+    order_date DATA NOT NULL
 
 );
 
@@ -78,7 +78,7 @@ CREATE TABLE ORDER(
 CREATE TABLE CUSTOMER(
     id SERIAL PRIMARY KEY,
     full_name VARCHAR(1478) NOT NULL,
-    birthday VARCHAR(8) NOT NULL,
+    birthday DATA NOT NULL,
     address VARCHAR(100) NOT NULL,
     phone VARCHAR(15) NOT NULL,
     postcode VARCHAR(345) NOT NULL,
