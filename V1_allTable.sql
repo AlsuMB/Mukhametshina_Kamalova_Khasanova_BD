@@ -12,7 +12,7 @@ CREATE TABLE PRODUCT(
 CREATE TABLE PRODUCT_BASKET_RELATION(
     product_id INT NOT NULL REFERENCES PRODUCT(id),
     basket_id INT NOT NULL REFERENCES BASKET(id),
-     (CONSTRAINT product_basket_pk PRIMARY KEY (basket_id, product_id))
+    CONSTRAINT product_basket_pk PRIMARY KEY (basket_id, product_id)
 );
 
 -- ALSU
