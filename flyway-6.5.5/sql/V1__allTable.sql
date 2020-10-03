@@ -1,0 +1,76 @@
+CREATE TABLE PROMOCODE(
+    id SERIAL PRIMARY KEY,
+    promocode VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE BASKET(
+    id SERIAL PRIMARY KEY,
+    promocode_id INT REFERENCES PROMOCODE(id)
+);
+
+CREATE TABLE COUNTRY(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE CATEGORY(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE PRODUCER(
+    id SERIAL PRIMARY KEY,
+    country_id INT REFERENCES COUNTRY(id),
+    name VARCHAR(100) NOT NULL,
+    url VARCHAR(200) NOT NULL,
+    phone VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE PRODUCT(
+    id SERIAL PRIMARY KEY,
+    category_id INT REFERENCES CATEGORY(id),
+    producer_id INT REFERENCES PRODUCER(id),
+    name VARCHAR(100) NOT NULL,
+    license_term VARCHAR (50) NOT NULL,
+    price INT CONSTRAINT positive_price CHECK (price > 0), CHECK (price < 50000)
+);
+
+CREATE TABLE CUSTOMER(
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(1478) NOT NULL,
+    birthday DATE NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    postcode VARCHAR(345) NOT NULL,
+    login VARCHAR(20) NOT NULL,
+    password VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE PRODUCT_BASKET_RELATION(
+    product_id INT NOT NULL REFERENCES PRODUCT(id),
+    basket_id INT NOT NULL REFERENCES BASKET(id),
+    CONSTRAINT product_basket_pk PRIMARY KEY (basket_id, product_id)
+);
+
+CREATE TABLE UNIQUE_CODE(
+    id SERIAL PRIMARY KEY,
+    id_product INT REFERENCES PRODUCT(id),
+    unique_code VARCHAR(100) UNIQUE NOT NULL
+);
+
+
+CREATE TABLE PAYMENT(
+    id SERIAL PRIMARY KEY,
+    id_customer INT REFERENCES CUSTOMER(id),
+    card_number VARCHAR(16) NOT NULL,
+    cardholder_name VARCHAR(26) NOT NULL
+);
+
+CREATE TABLE ORDERS(
+    id SERIAL PRIMARY KEY,
+    id_basket INT UNIQUE REFERENCES BASKET(id),
+    id_customer INT REFERENCES CUSTOMER(id),
+    id_payment INT REFERENCES PAYMENT(id),
+    cost INT NOT NULL,
+    order_date DATE NOT NULL
+);
