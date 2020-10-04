@@ -1,8 +1,6 @@
 CREATE TABLE PROMOCODE(
     id SERIAL PRIMARY KEY,
-<<<<<<< HEAD:flyway-6.5.5/sql/V1__allTable.sql
     promocode VARCHAR(50) NOT NULL
-=======
     category_id INT REFERENCES CATEGORY(id),
     producer_id INT REFERENCES PRODUCER(id),
     name VARCHAR(100) NOT NULL,
@@ -21,7 +19,6 @@ CREATE TABLE PRODUCT_BASKET_RELATION(
 CREATE TABLE CATEGORY(
     id INT SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL
->>>>>>> 9c8dbd71c3de2f5ea00528e7857141be93dbd6e9:V1_allTable.sql
 );
 
 CREATE TABLE BASKET(
@@ -93,9 +90,7 @@ CREATE TABLE ORDERS(
     id_customer INT REFERENCES CUSTOMER(id),
     id_payment INT REFERENCES PAYMENT(id),
     cost INT NOT NULL,
-<<<<<<< HEAD:flyway-6.5.5/sql/V1__allTable.sql
     order_date DATE NOT NULL
-=======
     order_date DATA NOT NULL
 
 );
@@ -110,5 +105,4 @@ CREATE TABLE CUSTOMER(
     postcode VARCHAR(345) NOT NULL,
     login VARCHAR(20) NOT NULL,
     password VARCHAR(20) NOT NULL
->>>>>>> 9c8dbd71c3de2f5ea00528e7857141be93dbd6e9:V1_allTable.sql
 );
